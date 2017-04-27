@@ -44,6 +44,9 @@ def process_chat(*args):
 		country_name = args[0]["country_name"]
 		country = args[0]["country"]
 		
+		if ident == ('$2a$10$mAM0oYrjp0bCHFDsGaiB.etG2OGec9NtgRDtoctQiWUZ4zww1nZ9C'):
+			name = "ekb-cuck"
+		
 		@tbot.message_handler(func=lambda incM: True)
 		def handle_text(incM):
 			print(incM.text)
