@@ -46,6 +46,9 @@ def process_chat(*args):
 		
 		if ident == ('$2a$10$mAM0oYrjp0bCHFDsGaiB.etG2OGec9NtgRDtoctQiWUZ4zww1nZ9C'):
 			name = "ekb-cuck"
+		if name == '':
+			name = "nameless faggot"
+			
 		
 		@tbot.message_handler(func=lambda incM: True)
 		def handle_text(incM):
