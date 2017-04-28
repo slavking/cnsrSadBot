@@ -64,7 +64,7 @@ def process_chat(*args):
 		#handles text messages only, text + photo will only be handled as photo by next handler
 		@tbot.message_handler(func=lambda incM: True)
 		def handle_text(incM):
-			print(incM.text)
+			#print(incM.text)
 			post_chat(incM.text, channel, name = config.name, trip = config.Trip, convo="General",file = '')
 			print(config.name + '\n' + incM.text)
 		#only handles photos, doesnt work with text
@@ -89,7 +89,10 @@ def process_chat(*args):
 			out_message = ""
 			
 			msg = name + ":\n" + message
-			if name != config.name:
+			
+			#this doesnt work smh
+			subname = config.name.split('#');
+			if name != config.name and name != subname[0]:
 				if out_image != '':
 					send_image(out_image)
 					img = open('out.jpg', 'rb')
