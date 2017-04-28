@@ -74,7 +74,7 @@ def process_chat(*args):
 			file_id = message.photo[-1].file_id
 			imageIn = tbot.get_file(file_id)
 			image_file = requests.get('https://api.telegram.org/file/bot' + config.token + '/' + imageIn.file_path)
-			print(image_file)
+			#print(image_file)
 			with open('in.jpg','wb') as f:
 				f.write(image_file.content)
 				f.close()
