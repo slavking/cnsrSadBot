@@ -10,7 +10,6 @@ import telebot
 import re
 import sys
 import random
-#from datetime import datetime
 import config
 from urllib2 import urlopen
 import hbot
