@@ -15,6 +15,9 @@ from urllib2 import urlopen
 import hbot
 import requests
 
+import urllib
+from bs4 import BeautifulSoup, Comment
+
 tbot = telebot.TeleBot(config.token)
 
 #if you don't input channel to connect to'
@@ -33,6 +36,12 @@ def send_image(url):
 	f.write(urllib2.urlopen(url).read())
 	f.close()
 
+
+base_url = 'http://www.worldtimeserver.com/current_time_in_'
+
+class Opener(urllib.FancyURLopener):
+	version = 'App/1.7'
+
 def process_chat(*args):
 	#uncomment for debug:
 	#print(args)
@@ -46,6 +55,44 @@ def process_chat(*args):
 		country_name = args[0]["country_name"]
 		country = args[0]["country"]
 		
+		print(country)	
+		
+		def get_time():
+			c = ''
+			result = ''
+			result_time = ''
+			local_country = country
+			print('a - ' + country)
+			for char in country:
+				if char.isalpha():
+					c += char
+			c = c[:2]
+			url = base_url + c + '.aspx'	
+			r = Opener().open(url)
+			soup = BeautifulSoup(r,'lxml')
+			#get time
+			time_comments = soup.findAll(text=lambda text:isinstance(text,Comment))
+			for x in time_comments:
+				y = ''
+				for char in x:
+					if char != ' ':
+						y += char
+				if re.match('ServerTimewithseconds:',y):
+					result = y
+			for char in result:
+				if not char.isalpha():
+					result_time += char
+			result_time = result_time[1:]
+			#get city + country
+			city_found = soup.find('h1',{'class':'placeNameH1'})
+			city = city_found.text
+			#cleaning up city output
+			city = re.sub('\s+','',city)
+			city = ' '.join(re.findall('[A-Z][^A-Z]*',city))
+			#print result
+			return ('Time in {0} is {1}'.format(city, result_time))
+		
+		
 		help_msg = 'no help message defined'
 		
 		#for ekb and those who don't have names
@@ -54,6 +101,11 @@ def process_chat(*args):
 			name = "ekb-cuck"
 		if name == '':
 			name = "nameless faggot"
+		
+		#gets time
+		if re.match(message,'.htime'):
+			out_msg = out_msg = '>>' + count + '\n' + get_time()
+			post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
 		
 		#bot commands
 		for (k,v) in hbot.answers.iteritems():
