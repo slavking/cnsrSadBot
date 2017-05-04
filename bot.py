@@ -56,7 +56,8 @@ def process_chat(*args):
 		country = args[0]["country"]
 		
 		print(country)	
-		
+		# all this should be in the hbot.py file
+		#you should only pass it the appropriate commands
 		def get_time():
 			c = ''
 			result = ''
@@ -108,10 +109,13 @@ def process_chat(*args):
 			post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
 		
 		#bot commands
-		for (k,v) in hbot.answers.iteritems():
-			if re.match(k,message):
-				help_msg = hbot.answers[k]
-				out_msg = '>>' + count + '\n' + help_msg
+                #these commands are shit
+		for (k,v) in hbot.answers.iteritems(): #what does this do? it returns a dictionary of answers
+			if re.match(k,message): #regexp is shit
+				help_msg = hbot.answers[k]  #this is horrific
+				#it should be help msg = hbot(parameter, callback_function)
+				# or at least, hbot.answers[k](parameter) 
+				out_msg = ">>" + count + '\n' + help_msg
 				post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
 				
 		#handles text messages only, text + photo will only be handled as photo by next handler
