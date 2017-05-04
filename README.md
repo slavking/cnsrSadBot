@@ -11,3 +11,4 @@ HOW TO RUN:
 python bot.py int
 
 SOCKETIO_CLIENT SHOULD BE 0.5.6
+  
